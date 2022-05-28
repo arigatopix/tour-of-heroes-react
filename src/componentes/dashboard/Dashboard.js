@@ -9,7 +9,7 @@ const Dashboard = () => {
       return (
         <Link
           className={`${classes.hero} m2 p-4 text-decoration-none`}
-          to={`/hero-form/${hero.id}`}
+          to={`/heroes-form/${hero.id}`}
         >
           {hero.name}
         </Link>
