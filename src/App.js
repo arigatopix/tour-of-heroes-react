@@ -26,7 +26,7 @@ const App = () => {
       <Routes>
         <Route path="heroes" element={<Heroes />}></Route>
         <Route path="dashboard" element={<Dashboard />}></Route>
-        <Route path="heroes-form">
+        <Route path="heroes-form/*">
           <Route path=":id" element={<HeroForm />}></Route>
         </Route>
       </Routes>
