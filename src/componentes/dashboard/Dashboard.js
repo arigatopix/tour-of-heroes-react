@@ -8,6 +8,7 @@ const Dashboard = () => {
     .map(hero => {
       return (
         <Link
+          key={hero.id}
           className={`${classes.hero} m2 p-4 text-decoration-none`}
           to={`/heroes-form/${hero.id}`}
         >
