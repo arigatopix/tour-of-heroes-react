@@ -3,6 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 
 import Dashboard from './componentes/dashboard/Dashboard';
 import Heroes from './componentes/heroes/Heroes';
+import HeroForm from './componentes/heroes/HeroForm';
 
 const App = () => {
   return (
@@ -23,8 +24,11 @@ const App = () => {
       </ul>
 
       <Routes>
-        <Route path="/heroes" element={<Heroes />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="heroes" element={<Heroes />}></Route>
+        <Route path="dashboard" element={<Dashboard />}></Route>
+        <Route path="heroes-form">
+          <Route path=":id" element={<HeroForm />}></Route>
+        </Route>
       </Routes>
     </div>
   );
