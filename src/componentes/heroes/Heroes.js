@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import HeroList from './HeroList';
 
 const Heroes = () => {
@@ -8,7 +9,9 @@ const Heroes = () => {
           My Heroes <i className="shield-shaded"></i>
         </h4>
 
-        <button className="btn btn-primary">Add</button>
+        <Link to="/heroes-form" className="btn btn-primary">
+          Add
+        </Link>
       </div>
       <hr />
 
