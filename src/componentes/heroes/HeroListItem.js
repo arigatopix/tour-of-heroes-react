@@ -7,8 +7,8 @@ const HeroListItem = ({ heroes }) => {
         <div>
           <span className={classes.badge}>{hero.id}</span> {hero.name}
         </div>
-        <div class="btn btn-danger btn-sm">
-          <i class="bi bi-trash"></i>
+        <div className="btn btn-danger btn-sm">
+          <i className="bi bi-trash"></i>
         </div>
       </div>
     </li>
