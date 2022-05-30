@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import HeroContextProvider from './context/hero-context';
+import HeroContextProvider from './store/hero/hero-context';
 
 import './index.css';
 

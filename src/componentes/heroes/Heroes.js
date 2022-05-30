@@ -1,10 +1,14 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import HeroList from './HeroList';
-import { HeroContext } from '../../context/hero-context';
+import { HeroContext } from '../../store/hero/hero-context';
 
 const Heroes = () => {
   const heroContext = useContext(HeroContext);
+
+  const { heroes, getHeroes } = heroContext;
+
+  console.log(heroes);
 
   return (
     <>
