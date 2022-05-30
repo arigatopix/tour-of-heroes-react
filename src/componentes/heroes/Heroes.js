@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import HeroList from './HeroList';
+import { HeroContext } from '../../context/hero-context';
 
 const Heroes = () => {
+  const heroContext = useContext(HeroContext);
+
   return (
     <>
       <div className="d-flex justify-content-between my-2">
