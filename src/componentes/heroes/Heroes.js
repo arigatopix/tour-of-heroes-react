@@ -6,7 +6,7 @@ import { HeroContext } from '../../store/hero/hero-context';
 const Heroes = () => {
   const heroContext = useContext(HeroContext);
 
-  const { heroes, getHeroes } = heroContext;
+  const { heroes, loading, getHeroes } = heroContext;
 
   useEffect(() => {
     getHeroes();
@@ -24,9 +24,16 @@ const Heroes = () => {
         </Link>
       </div>
       <hr />
-
       <ul>
-        <HeroList heroes={heroes} />
+        {loading ? (
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <HeroList heroes={heroes} />
+        )}
       </ul>
     </>
   );

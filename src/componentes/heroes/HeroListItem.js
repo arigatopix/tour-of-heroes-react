@@ -1,9 +1,15 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './HeroListItem.module.css';
+import { HeroContext } from '../../store/hero/hero-context';
 
 const HeroListItem = ({ hero }) => {
+  const heroContext = useContext(HeroContext);
+
+  const { deleteHero } = heroContext;
+
   const onDeleteHandler = () => {
-    console.log('Deleted hero id ', hero.id);
+    deleteHero(hero.id);
   };
 
   return (
@@ -12,9 +18,9 @@ const HeroListItem = ({ hero }) => {
         <Link to={`/heroes-form/${hero.id}`} className="text-decoration-none">
           <span className={classes.badge}>{hero.id}</span> {hero.name}
         </Link>
-        <button className="btn btn-danger btn-sm" onClick={onDeleteHandler}>
+        <div className="btn btn-danger btn-sm" onClick={onDeleteHandler}>
           <i className="bi bi-trash"></i>
-        </button>
+        </div>
       </div>
     </li>
   );

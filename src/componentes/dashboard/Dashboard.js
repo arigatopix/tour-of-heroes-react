@@ -5,7 +5,7 @@ import { HeroContext } from '../../store/hero/hero-context';
 import classes from './Dashboard.module.css';
 
 const Dashboard = () => {
-  const { heroes, getHeroes } = useContext(HeroContext);
+  const { loading, heroes, getHeroes } = useContext(HeroContext);
 
   useEffect(() => {
     getHeroes();
@@ -28,7 +28,15 @@ const Dashboard = () => {
   return (
     <>
       <h4>Top Heroes</h4>
-      <div className="my-2 d-flex justify-content-around heroes">{hero}</div>
+      {loading ? (
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      ) : (
+        <div className="my-2 d-flex justify-content-around heroes">{hero}</div>
+      )}
     </>
   );
 };
