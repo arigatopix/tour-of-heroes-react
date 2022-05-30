@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import HeroList from './HeroList';
 import { HeroContext } from '../../store/hero/hero-context';
@@ -8,7 +8,9 @@ const Heroes = () => {
 
   const { heroes, getHeroes } = heroContext;
 
-  console.log(heroes);
+  useEffect(() => {
+    getHeroes();
+  }, []);
 
   return (
     <>
@@ -24,7 +26,7 @@ const Heroes = () => {
       <hr />
 
       <ul>
-        <HeroList />
+        <HeroList heroes={heroes} />
       </ul>
     </>
   );

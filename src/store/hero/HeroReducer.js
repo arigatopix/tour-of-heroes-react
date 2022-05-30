@@ -2,7 +2,7 @@ import { GET_HEROES, UPDATE_HERO, CREATE_HERO, DELETE_HERO } from '../types';
 const HeroReducer = (currentState, action) => {
   switch (action.type) {
     case GET_HEROES:
-      return { currentState, hereos: action.payload };
+      return { ...currentState, heroes: action.payload };
     case UPDATE_HERO:
       return {};
     case CREATE_HERO:

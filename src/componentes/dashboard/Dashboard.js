@@ -1,9 +1,16 @@
+import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { heroes } from '../mock-heroes';
+import { HeroContext } from '../../store/hero/hero-context';
 
 import classes from './Dashboard.module.css';
 
 const Dashboard = () => {
+  const { heroes, getHeroes } = useContext(HeroContext);
+
+  useEffect(() => {
+    getHeroes();
+  }, []);
+
   const hero = heroes
     .map(hero => {
       return (

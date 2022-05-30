@@ -2,23 +2,27 @@ import { createContext, useReducer } from 'react';
 import { GET_HEROES } from '../types';
 import HeroReducer from './HeroReducer';
 
-const initialState = [];
+const initialState = {
+  heroes: [],
+};
 
 export const HeroContext = createContext(initialState);
 
 const HeroContextProvider = props => {
-  const [heroes, dispatch] = useReducer(HeroReducer, []);
+  const [state, dispatch] = useReducer(HeroReducer, initialState);
 
   const basedUrl = 'http://localhost:5000';
 
-  const getHeroes = () => {
-    const heroes = fetch(`${basedUrl}/heroes`);
+  const getHeroes = async () => {
+    const res = await fetch(`${basedUrl}/heroes`);
+
+    const heroes = await res.json();
 
     dispatch({ type: GET_HEROES, payload: heroes });
   };
 
   const context = {
-    heroes,
+    heroes: state.heroes,
     getHeroes,
   };
 
