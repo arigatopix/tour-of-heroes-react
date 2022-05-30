@@ -35,9 +35,7 @@ const Dashboard = () => {
           </div>
         </div>
       ) : (
-        <div classNameName="my-2 d-flex justify-content-around heroes">
-          {hero}
-        </div>
+        <div className="my-2 d-flex justify-content-around heroes">{hero}</div>
       )}
     </>
   );
