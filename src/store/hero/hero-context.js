@@ -1,20 +1,27 @@
 import { createContext, useReducer } from 'react';
 import {
+  GET_HERO,
   CREATE_HERO,
   UPDATE_HERO,
   DELETE_HERO,
   GET_HEROES,
   SET_LOADING,
+  SET_CURRETN_HERO,
+  CLEAR_CURRENT_HERO,
 } from '../types';
 import HeroReducer from './HeroReducer';
 
 const initialState = {
   loading: false,
   heroes: [],
+  current: {},
+  getHero: () => {},
   getHeroes: () => {},
   updateHero: () => {},
   createHero: () => {},
   deleteHero: () => {},
+  setCurrent: () => {},
+  clearCurrent: () => {},
 };
 
 export const HeroContext = createContext(initialState);
@@ -23,6 +30,16 @@ const HeroContextProvider = props => {
   const [state, dispatch] = useReducer(HeroReducer, initialState);
 
   const basedUrl = 'http://localhost:5000';
+
+  const getHero = async id => {
+    setLoading();
+
+    const res = await fetch(`${basedUrl}/heroes/${id}`);
+
+    const hero = await res.json();
+
+    dispatch({ type: GET_HERO, payload: hero });
+  };
 
   const getHeroes = async () => {
     setLoading();
@@ -84,13 +101,25 @@ const HeroContextProvider = props => {
     dispatch({ type: SET_LOADING });
   };
 
+  const setCurrent = hero => {
+    dispatch({ type: SET_CURRETN_HERO, payload: hero });
+  };
+
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT_HERO, payload: {} });
+  };
+
   const context = {
     heroes: state.heroes,
     loading: state.loading,
+    current: state.current,
+    getHero,
     getHeroes,
     updateHero,
     createHero,
     deleteHero,
+    setCurrent,
+    clearCurrent,
   };
 
   return (

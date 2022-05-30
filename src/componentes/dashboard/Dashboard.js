@@ -5,7 +5,7 @@ import { HeroContext } from '../../store/hero/hero-context';
 import classes from './Dashboard.module.css';
 
 const Dashboard = () => {
-  const { loading, heroes, getHeroes } = useContext(HeroContext);
+  const { loading, heroes, getHeroes, setCurrent } = useContext(HeroContext);
 
   useEffect(() => {
     getHeroes();
@@ -18,6 +18,7 @@ const Dashboard = () => {
           key={hero.id}
           className={`${classes.hero} m2 p-4 text-decoration-none`}
           to={`/heroes-form/${hero.id}`}
+          onClick={() => setCurrent(hero)}
         >
           {hero.name}
         </Link>
