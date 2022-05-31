@@ -5,7 +5,7 @@ import {
   CREATE_HERO,
   DELETE_HERO,
   SET_LOADING,
-  SET_CURRETN_HERO,
+  SET_CURRENT_HERO,
   CLEAR_CURRENT_HERO,
   SET_ERROR,
   CLEAR_ERROR,
@@ -45,7 +45,7 @@ const HeroReducer = (currentState, action) => {
       };
     case SET_LOADING:
       return { ...currentState, loading: true };
-    case SET_CURRETN_HERO:
+    case SET_CURRENT_HERO:
       return { ...currentState, current: action.payload };
     case CLEAR_CURRENT_HERO:
       return { ...currentState, current: action.payload };

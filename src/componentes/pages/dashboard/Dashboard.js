@@ -1,6 +1,7 @@
 import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { HeroContext } from '../../../store/hero/hero-context';
+import HeroSearch from '../heroes/HeroSearch';
 
 import classes from './Dashboard.module.css';
 
@@ -38,6 +39,8 @@ const Dashboard = () => {
       ) : (
         <div className="my-2 d-flex justify-content-around heroes">{hero}</div>
       )}
+
+      <HeroSearch />
     </>
   );
 };

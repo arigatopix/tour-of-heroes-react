@@ -6,7 +6,7 @@ import {
   DELETE_HERO,
   GET_HEROES,
   SET_LOADING,
-  SET_CURRETN_HERO,
+  SET_CURRENT_HERO,
   CLEAR_CURRENT_HERO,
   SET_ERROR,
 } from '../types';
@@ -120,7 +120,7 @@ const HeroContextProvider = props => {
   };
 
   const setCurrent = hero => {
-    dispatch({ type: SET_CURRETN_HERO, payload: hero });
+    dispatch({ type: SET_CURRENT_HERO, payload: hero });
   };
 
   const clearCurrent = () => {
