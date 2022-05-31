@@ -18,12 +18,14 @@ const HeroListItem = ({ hero }) => {
 
   return (
     <li
+      key={hero.id}
       className="list-group-item list-group-item-action"
       onClick={onClickHandler}
     >
       <div className="d-flex justify-content-between">
         <Link to={`/heroes-form/${hero.id}`} className="text-decoration-none">
-          <span className={classes.badge}>{hero.id}</span> {hero.name}
+          <span className={classes.badge}>{String(hero.id).slice(0, 4)}</span>{' '}
+          {hero.name}
         </Link>
         <div className="btn btn-danger btn-sm" onClick={onDeleteHandler}>
           <i className="bi bi-trash"></i>

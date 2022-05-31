@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useCallback } from 'react';
 import {
   GET_HERO,
   CREATE_HERO,
@@ -62,16 +62,14 @@ const HeroContextProvider = props => {
 
   const updateHero = async hero => {
     setLoading();
-
     try {
-      const res = await fetch(
-        `${basedUrl}/heroes/${hero.id}`,
-        {
-          'Content-Type': 'application-json',
-          method: 'PUT',
+      const res = await fetch(`${basedUrl}/heroes/${hero.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        hero
-      );
+        body: JSON.stringify(hero),
+      });
 
       const updatedHero = await res.json();
 
@@ -85,14 +83,13 @@ const HeroContextProvider = props => {
     setLoading();
 
     try {
-      const res = await fetch(
-        `${basedUrl}/heroes`,
-        {
-          'Content-Type': 'application-json',
-          method: 'POST',
+      const res = await fetch(`${basedUrl}/heroes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        hero
-      );
+        body: JSON.stringify(hero),
+      });
 
       const cretedHero = await res.json();
 

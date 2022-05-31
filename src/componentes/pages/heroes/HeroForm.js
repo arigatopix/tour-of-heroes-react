@@ -1,15 +1,20 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HeroContext } from '../../../store/hero/hero-context';
+import { v4 } from 'uuid';
 
 const HeroForm = () => {
+  const nameInputRef = useRef();
   const navigate = useNavigate();
   const heroContext = useContext(HeroContext);
-  const { current, clearCurrent } = heroContext;
+  const { updateHero, createHero, current, clearCurrent } = heroContext;
   const initHeroState = {
     id: null,
     name: '',
   };
+
+  const [hero, setHero] = useState(initHeroState);
+
   useEffect(() => {
     if (current) {
       setHero(current);
@@ -17,8 +22,6 @@ const HeroForm = () => {
       setHero(initHeroState);
     }
   }, [current]);
-
-  const [hero, setHero] = useState(initHeroState);
 
   const { id, name } = hero;
 
@@ -28,12 +31,20 @@ const HeroForm = () => {
 
   const onSubmitHandler = e => {
     e.preventDefault();
+
+    if (id) {
+      updateHero({ id: id, name: nameInputRef.current.value });
+    } else {
+      createHero({ id: v4(), name: nameInputRef.current.value });
+    }
+
+    navigate(-1);
     clearCurrent();
   };
 
   const onGoBackHandler = () => {
-    navigate(-1);
     clearCurrent();
+    navigate(-1);
   };
 
   return (
@@ -44,6 +55,7 @@ const HeroForm = () => {
           Hero name
         </label>
         <input
+          ref={nameInputRef}
           className="form-control"
           type="text"
           id="name"
@@ -54,9 +66,9 @@ const HeroForm = () => {
 
         <hr />
         <div className="d-flex justify-content-between">
-          <button className="btn btn-secondary" onClick={onGoBackHandler}>
+          <div className="btn btn-secondary" onClick={onGoBackHandler}>
             Back
-          </button>
+          </div>
           <button className="btn btn-primary">Save</button>
         </div>
       </form>

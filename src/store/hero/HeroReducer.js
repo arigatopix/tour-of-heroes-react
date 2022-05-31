@@ -16,9 +16,7 @@ const HeroReducer = (currentState, action) => {
       return {
         ...currentState,
         loading: false,
-        heroes: currentState.heroes.filter(
-          hero => hero.id !== action.payload.id
-        ),
+        hero: action.payload,
       };
     case GET_HEROES:
       return { ...currentState, heroes: action.payload, loading: false };
@@ -37,17 +35,13 @@ const HeroReducer = (currentState, action) => {
       return {
         ...currentState,
         loading: false,
-        heroes: [...currentState.heres, action.payload],
+        heroes: [...currentState.heroes, action.payload],
       };
     case DELETE_HERO:
       return {
         ...currentState,
-
         loading: false,
-        heroes: [
-          ...currentState.heroes,
-          currentState.heroes.filter(heroId => heroId !== action.payload),
-        ],
+        heroes: currentState.heroes.filter(hero => hero.id !== action.payload),
       };
     case SET_LOADING:
       return { ...currentState, loading: true };
