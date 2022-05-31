@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react';
+import React, { createContext, useReducer } from 'react';
 import {
   GET_HERO,
   CREATE_HERO,
@@ -8,6 +8,7 @@ import {
   SET_LOADING,
   SET_CURRETN_HERO,
   CLEAR_CURRENT_HERO,
+  SET_ERROR,
 } from '../types';
 import HeroReducer from './HeroReducer';
 
@@ -15,6 +16,7 @@ const initialState = {
   loading: false,
   heroes: [],
   current: {},
+  error: '',
   getHero: () => {},
   getHeroes: () => {},
   updateHero: () => {},
@@ -33,68 +35,87 @@ const HeroContextProvider = props => {
 
   const getHero = async id => {
     setLoading();
+    try {
+      const res = await fetch(`${basedUrl}/heroes/${id}`);
 
-    const res = await fetch(`${basedUrl}/heroes/${id}`);
+      const hero = await res.json();
 
-    const hero = await res.json();
-
-    dispatch({ type: GET_HERO, payload: hero });
+      dispatch({ type: GET_HERO, payload: hero });
+    } catch (err) {
+      dispatch({ type: SET_ERROR, payload: err });
+    }
   };
 
   const getHeroes = async () => {
     setLoading();
 
-    const res = await fetch(`${basedUrl}/heroes`);
+    try {
+      const res = await fetch(`${basedUrl}/heroes`);
 
-    const heroes = await res.json();
+      const heroes = await res.json();
 
-    dispatch({ type: GET_HEROES, payload: heroes });
+      dispatch({ type: GET_HEROES, payload: heroes });
+    } catch (err) {
+      dispatch({ type: SET_ERROR, payload: err });
+    }
   };
 
   const updateHero = async hero => {
     setLoading();
 
-    const res = await fetch(
-      `${basedUrl}/heroes/${hero.id}`,
-      {
-        'Content-Type': 'application-json',
-        method: 'PUT',
-      },
-      hero
-    );
+    try {
+      const res = await fetch(
+        `${basedUrl}/heroes/${hero.id}`,
+        {
+          'Content-Type': 'application-json',
+          method: 'PUT',
+        },
+        hero
+      );
 
-    const updatedHero = await res.json();
+      const updatedHero = await res.json();
 
-    dispatch({ type: UPDATE_HERO, payload: updatedHero });
+      dispatch({ type: UPDATE_HERO, payload: updatedHero });
+    } catch (err) {
+      dispatch({ type: SET_ERROR, payload: err });
+    }
   };
 
   const createHero = async hero => {
     setLoading();
 
-    const res = await fetch(
-      `${basedUrl}/heroes`,
-      {
-        'Content-Type': 'application-json',
-        method: 'POST',
-      },
-      hero
-    );
+    try {
+      const res = await fetch(
+        `${basedUrl}/heroes`,
+        {
+          'Content-Type': 'application-json',
+          method: 'POST',
+        },
+        hero
+      );
 
-    const cretedHero = await res.json();
+      const cretedHero = await res.json();
 
-    dispatch({ type: CREATE_HERO, payload: cretedHero });
+      dispatch({ type: CREATE_HERO, payload: cretedHero });
+    } catch (err) {
+      dispatch({ type: SET_ERROR, payload: err });
+    }
   };
 
   const deleteHero = async id => {
     setLoading();
 
-    const res = await fetch(`${basedUrl}/heroes/${id}`, {
-      method: 'DELETE',
-    });
+    try {
+      const res = await fetch(`${basedUrl}/heroes/${id}`, {
+        method: 'DELETE',
+      });
 
-    await res.json();
+      await res.json();
 
-    dispatch({ type: DELETE_HERO, payload: id });
+      dispatch({ type: DELETE_HERO, payload: id });
+    } catch (err) {
+      dispatch({ type: SET_ERROR, payload: err });
+    }
   };
 
   const setLoading = () => {
@@ -113,6 +134,7 @@ const HeroContextProvider = props => {
     heroes: state.heroes,
     loading: state.loading,
     current: state.current,
+    error: state.error,
     getHero,
     getHeroes,
     updateHero,

@@ -7,6 +7,8 @@ import {
   SET_LOADING,
   SET_CURRETN_HERO,
   CLEAR_CURRENT_HERO,
+  SET_ERROR,
+  CLEAR_ERROR,
 } from '../types';
 const HeroReducer = (currentState, action) => {
   switch (action.type) {
@@ -40,6 +42,7 @@ const HeroReducer = (currentState, action) => {
     case DELETE_HERO:
       return {
         ...currentState,
+
         loading: false,
         heroes: [
           ...currentState.heroes,
@@ -52,6 +55,10 @@ const HeroReducer = (currentState, action) => {
       return { ...currentState, current: action.payload };
     case CLEAR_CURRENT_HERO:
       return { ...currentState, current: action.payload };
+    case SET_ERROR:
+      return { ...currentState, error: action.payload, loading: false };
+    case CLEAR_ERROR:
+      return { ...currentState, error: '' };
     default:
       throw new Error('Error at Hero Reducer');
   }

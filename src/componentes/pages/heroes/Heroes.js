@@ -2,11 +2,12 @@ import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import HeroList from './HeroList';
 import { HeroContext } from '../../../store/hero/hero-context';
+import Alert from '../../UI/Alert';
 
 const Heroes = () => {
   const heroContext = useContext(HeroContext);
 
-  const { heroes, loading, getHeroes } = heroContext;
+  const { error, heroes, loading, getHeroes } = heroContext;
 
   useEffect(() => {
     getHeroes();
@@ -14,6 +15,7 @@ const Heroes = () => {
 
   return (
     <>
+      {error && <Alert message={error.message} type="danger" />}
       <div className="d-flex justify-content-between my-2">
         <h4>
           My Heroes <i className="shield-shaded"></i>
