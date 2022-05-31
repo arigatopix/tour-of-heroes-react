@@ -1,14 +1,19 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 
-import Dashboard from './componentes/dashboard/Dashboard';
-import Heroes from './componentes/heroes/Heroes';
-import HeroForm from './componentes/heroes/HeroForm';
+import Dashboard from './componentes/pages/dashboard/Dashboard';
+import Heroes from './componentes/pages/heroes/Heroes';
+import HeroForm from './componentes/pages/heroes/HeroForm';
+import Main from './componentes/pages/main/Main';
 
 const App = () => {
   return (
     <div className="container">
-      <h1>Tour of Hero</h1>
+      <h1>
+        <Link className="text-reset text-decoration-none" to="/">
+          Tour of Hero
+        </Link>
+      </h1>
 
       <ul className="nav">
         <li className="nav-item">
@@ -24,6 +29,7 @@ const App = () => {
       </ul>
 
       <Routes>
+        <Route path="" element={<Main />}></Route>
         <Route path="heroes" element={<Heroes />}></Route>
         <Route path="dashboard" element={<Dashboard />}></Route>
         <Route path="heroes-form" element={<HeroForm />}></Route>

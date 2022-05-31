@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './HeroListItem.module.css';
-import { HeroContext } from '../../store/hero/hero-context';
+import { HeroContext } from '../../../store/hero/hero-context';
 
 const HeroListItem = ({ hero }) => {
   const heroContext = useContext(HeroContext);

@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HeroContext } from '../../store/hero/hero-context';
+import { HeroContext } from '../../../store/hero/hero-context';
 
 const HeroForm = () => {
   const navigate = useNavigate();
