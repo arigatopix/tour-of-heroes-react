@@ -49,7 +49,7 @@ const HeroForm = () => {
 
   return (
     <>
-      <h4>{name}</h4>
+      <h4>{name ? `Name: ${name}` : 'Create Hero'}</h4>
       <form onSubmit={onSubmitHandler}>
         <label className="form-label" htmlFor="name">
           Hero name
