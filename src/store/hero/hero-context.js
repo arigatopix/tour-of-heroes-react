@@ -12,9 +12,12 @@ import {
 } from '../types';
 import HeroReducer from './HeroReducer';
 
+import db from '../../db.json';
+
 const initialState = {
   loading: false,
   heroes: [],
+  hero: [],
   current: {},
   error: '',
   getHero: () => {},
@@ -33,7 +36,7 @@ const HeroContextProvider = props => {
 
   const basedUrl = 'http://localhost:5000';
 
-  const getHero = async id => {
+  const getHero = useCallback(async id => {
     setLoading();
     try {
       const res = await fetch(`${basedUrl}/heroes/${id}`);
@@ -44,7 +47,7 @@ const HeroContextProvider = props => {
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err });
     }
-  };
+  }, []);
 
   const getHeroes = useCallback(async () => {
     setLoading();
@@ -58,28 +61,29 @@ const HeroContextProvider = props => {
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err });
     }
-  }, [dispatch]);
+  }, []);
 
-  const updateHero = async hero => {
+  const updateHero = useCallback(async hero => {
     setLoading();
+
     try {
       const res = await fetch(`${basedUrl}/heroes/${hero.id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(hero),
       });
 
-      const updatedHero = await res.json();
+      const heroUpdated = await res.json();
 
-      dispatch({ type: UPDATE_HERO, payload: updatedHero });
+      dispatch({ type: UPDATE_HERO, payload: heroUpdated });
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err });
     }
-  };
+  }, []);
 
-  const createHero = async hero => {
+  const createHero = useCallback(async hero => {
     setLoading();
 
     try {
@@ -97,9 +101,9 @@ const HeroContextProvider = props => {
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err });
     }
-  };
+  }, []);
 
-  const deleteHero = async id => {
+  const deleteHero = useCallback(async id => {
     setLoading();
 
     try {
@@ -113,7 +117,7 @@ const HeroContextProvider = props => {
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err });
     }
-  };
+  }, []);
 
   const setLoading = () => {
     dispatch({ type: SET_LOADING });
@@ -132,6 +136,7 @@ const HeroContextProvider = props => {
     loading: state.loading,
     current: state.current,
     error: state.error,
+    hero: state.hero,
     getHero,
     getHeroes,
     updateHero,

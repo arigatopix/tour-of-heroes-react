@@ -1,41 +1,61 @@
-import { useState, useContext, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { HeroContext } from '../../../store/hero/hero-context';
 import { v4 } from 'uuid';
 
+const initHero = {
+  id: null,
+  name: null,
+};
 const HeroForm = () => {
-  const nameInputRef = useRef();
+  const params = useParams();
+
+  const heroId = Object.keys(params).length !== 0 ? Number(params.id) : null;
+
+  const [updatedHero, setUpdateHero] = useState(initHero);
+
   const navigate = useNavigate();
   const heroContext = useContext(HeroContext);
-  const { updateHero, createHero, current, clearCurrent } = heroContext;
-  const initHeroState = {
-    id: null,
-    name: '',
-  };
-
-  const [hero, setHero] = useState(initHeroState);
+  const {
+    updateHero,
+    createHero,
+    clearCurrent,
+    getHero,
+    hero,
+    loading,
+    error,
+  } = heroContext;
 
   useEffect(() => {
-    if (current) {
-      setHero(current);
+    if (heroId) {
+      getHero(heroId);
     } else {
-      setHero(initHeroState);
+      setUpdateHero(initHero);
     }
-  }, [current]);
+  }, [getHero, heroId]);
 
-  const { id, name } = hero;
+  useEffect(() => {
+    if (heroId) {
+      setUpdateHero(hero);
+    }
+  }, [hero, heroId]);
 
   const onChangeHandler = e => {
-    setHero({ ...hero, [e.target.id]: e.target.value });
+    setUpdateHero({ ...updatedHero, [e.target.id]: e.target.value });
   };
 
   const onSubmitHandler = e => {
     e.preventDefault();
 
-    if (id) {
-      updateHero({ id: id, name: nameInputRef.current.value });
+    navigate(-1);
+    clearCurrent();
+
+    if (heroId) {
+      // console.log(updatedHero);
+      updateHero({ id: heroId, name: updatedHero.name });
+      return;
     } else {
-      createHero({ id: v4(), name: nameInputRef.current.value });
+      createHero({ id: v4(), name: updatedHero.name });
     }
 
     navigate(-1);
@@ -49,29 +69,37 @@ const HeroForm = () => {
 
   return (
     <>
-      <h4>{name ? `Name: ${name}` : 'Create Hero'}</h4>
-      <form onSubmit={onSubmitHandler}>
-        <label className="form-label" htmlFor="name">
-          Hero name
-        </label>
-        <input
-          ref={nameInputRef}
-          className="form-control"
-          type="text"
-          id="name"
-          value={name || ''}
-          onChange={onChangeHandler}
-          required
-        />
+      <h4>{updatedHero.name ? `Name: ${updatedHero.name}` : 'Create Hero'}</h4>
 
-        <hr />
-        <div className="d-flex justify-content-between">
-          <div className="btn btn-secondary" onClick={onGoBackHandler}>
-            Back
+      {loading && !error ? (
+        <div className="d-flex justify-content-center">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
-          <button className="btn btn-primary">Save</button>
         </div>
-      </form>
+      ) : (
+        <form onSubmit={onSubmitHandler}>
+          <label className="form-label" htmlFor="name">
+            Hero name
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            id="name"
+            value={updatedHero.name || ''}
+            onChange={onChangeHandler}
+            required
+          />
+
+          <hr />
+          <div className="d-flex justify-content-between">
+            <div className="btn btn-secondary" onClick={onGoBackHandler}>
+              Back
+            </div>
+            <button className="btn btn-primary">Save</button>
+          </div>
+        </form>
+      )}
     </>
   );
 };

@@ -13,6 +13,24 @@ const Heroes = () => {
     getHeroes();
   }, [getHeroes]);
 
+  const renderLoad =
+    loading || error ? (
+      <div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    ) : (
+      ''
+    );
+
+  const heroListRender =
+    heroes.length !== 0 && (!loading || !error) ? (
+      <HeroList heroes={heroes} />
+    ) : (
+      ''
+    );
+
   return (
     <>
       {error && <Alert message={error.message} type="danger" />}
@@ -26,17 +44,8 @@ const Heroes = () => {
         </Link>
       </div>
       <hr />
-      <ul>
-        {loading ? (
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        ) : (
-          <HeroList heroes={heroes} />
-        )}
-      </ul>
+      {renderLoad}
+      {heroListRender}
     </>
   );
 };
