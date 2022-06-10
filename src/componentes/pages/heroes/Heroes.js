@@ -11,7 +11,7 @@ const Heroes = () => {
 
   useEffect(() => {
     getHeroes();
-  }, []);
+  }, [getHeroes]);
 
   return (
     <>

@@ -6,5 +6,6 @@ export const DELETE_HERO = 'DELETE_HERO';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_CURRENT_HERO = 'SET_CURRENT_HERO';
 export const CLEAR_CURRENT_HERO = 'CLEAR_CURRENT_HERO';
+export const SEARCH_HERO = 'SEARCH_HERO';
 export const SET_ERROR = 'SET_ERROR';
 export const CLEAR_ERROR = 'CREAR_ERROR';

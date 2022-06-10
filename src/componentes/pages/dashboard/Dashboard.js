@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { HeroContext } from '../../../store/hero/hero-context';
 import HeroSearch from '../heroes/HeroSearch';
@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getHeroes();
-  }, []);
+  }, [getHeroes]);
 
   const hero = heroes
     .map(hero => {
@@ -27,6 +27,10 @@ const Dashboard = () => {
     })
     .slice(0, 5);
 
+  const memolizeHeroSearch = useMemo(() => {
+    return <HeroSearch heroes={heroes} />;
+  }, [heroes]);
+
   return (
     <>
       <h4>Top Heroes</h4>
@@ -40,7 +44,7 @@ const Dashboard = () => {
         <div className="my-2 d-flex justify-content-around heroes">{hero}</div>
       )}
 
-      <HeroSearch />
+      {memolizeHeroSearch}
     </>
   );
 };

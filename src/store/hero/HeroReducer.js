@@ -53,6 +53,7 @@ const HeroReducer = (currentState, action) => {
       return { ...currentState, error: action.payload, loading: false };
     case CLEAR_ERROR:
       return { ...currentState, error: '' };
+
     default:
       throw new Error('Error at Hero Reducer');
   }

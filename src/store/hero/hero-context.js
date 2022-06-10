@@ -46,7 +46,7 @@ const HeroContextProvider = props => {
     }
   };
 
-  const getHeroes = async () => {
+  const getHeroes = useCallback(async () => {
     setLoading();
 
     try {
@@ -58,7 +58,7 @@ const HeroContextProvider = props => {
     } catch (err) {
       dispatch({ type: SET_ERROR, payload: err });
     }
-  };
+  }, [dispatch]);
 
   const updateHero = async hero => {
     setLoading();
