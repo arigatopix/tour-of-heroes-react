@@ -12,8 +12,6 @@ import {
 } from '../types';
 import HeroReducer from './HeroReducer';
 
-import db from '../../db.json';
-
 const initialState = {
   loading: false,
   heroes: [],
